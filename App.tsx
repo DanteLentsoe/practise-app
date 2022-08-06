@@ -3,14 +3,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import React, { useContext } from "react";
 import ManageExpense from "./screens/ManageExpense";
 import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
 import { GlobalStyles } from "./constants/styles";
 import IconButton from "./components/UI/IconButton";
 import ExpensesContextProvider from "./store/expenses-context";
-
+import AuthContextProvider, { AuthContext } from "./provider/AuthProvider";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignUpScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
@@ -19,20 +19,47 @@ const Stack = createNativeStackNavigator();
 const Auth = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
-function AuthStack() {
+const AuthStack = () => {
   return (
     <Auth.Navigator
       screenOptions={{
         // headerStyle: { backgroundColor: "green" },
         headerTintColor: "white",
-      }}>
+      }}
+      initialRouteName="login">
       <Auth.Screen name="Login" component={LoginScreen} />
       <Auth.Screen name="Signup" component={SignupScreen} />
     </Auth.Navigator>
   );
-}
+};
 
-function ExpensesOverview() {
+const AuthenticatedRoutes = () => {
+  return (
+    <>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+          headerTintColor: "white",
+        }}
+        initialRouteName="ExpensesOverview">
+        <Stack.Screen
+          name="ExpensesOverview"
+          component={ExpensesOverview}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ManageExpense"
+          component={ManageExpense}
+          options={{
+            presentation: "modal",
+          }}
+        />
+      </Stack.Navigator>
+    </>
+  );
+};
+
+const ExpensesOverview = () => {
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
@@ -75,37 +102,30 @@ function ExpensesOverview() {
       />
     </BottomTabs.Navigator>
   );
-}
+};
 
-export default function App() {
+const Navigation = () => {
+  const authCtx = useContext(AuthContext);
+
+  return (
+    <>
+      <NavigationContainer>
+        {authCtx.isAuthtenticated ? <AuthenticatedRoutes /> : <AuthStack />}
+      </NavigationContainer>
+    </>
+  );
+};
+const App = () => {
   return (
     <>
       <StatusBar style="light" />
-      <ExpensesContextProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-              headerTintColor: "white",
-            }}
-            initialRouteName="login">
-            <Stack.Screen
-              name="ExpensesOverview"
-              component={ExpensesOverview}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="ManageExpense"
-              component={ManageExpense}
-              options={{
-                presentation: "modal",
-              }}
-            />
-
-            <Stack.Screen name="login" component={AuthStack} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </ExpensesContextProvider>
+      <AuthContextProvider>
+        <ExpensesContextProvider>
+          <Navigation />
+        </ExpensesContextProvider>
+      </AuthContextProvider>
     </>
   );
-}
+};
+
+export default App;
