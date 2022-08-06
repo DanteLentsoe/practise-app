@@ -1,21 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import AuthContent from "../components/Auth/AuthContent";
 import { registerUser } from "../util/auth";
-import { useState } from "react";
+import { Alert } from "react-native";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
+import { UserAuthInfo } from "../constants/types";
 
 const SignupScreen = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const registerUserHandler = async ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }) => {
+  const registerUserHandler = async ({ email, password }: UserAuthInfo) => {
     setIsAuthenticated(true);
-    await registerUser(email, password);
+    try {
+      await registerUser(email, password);
+    } catch (error) {
+      Alert.alert("AUTH error", `Registering failed due to ${error}`);
+    }
     setIsAuthenticated(false);
   };
 
