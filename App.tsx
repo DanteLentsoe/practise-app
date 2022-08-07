@@ -60,6 +60,7 @@ const AuthenticatedRoutes = () => {
 };
 
 const ExpensesOverview = () => {
+  const authCtx = useContext(AuthContext);
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
@@ -74,6 +75,16 @@ const ExpensesOverview = () => {
             color={tintColor}
             onPress={() => {
               navigation.navigate("ManageExpense");
+            }}
+          />
+        ),
+        headerLeft: ({ tintColor }) => (
+          <IconButton
+            icon="log-out-outline"
+            size={24}
+            color={tintColor}
+            onPress={() => {
+              authCtx.logout();
             }}
           />
         ),
