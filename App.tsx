@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ManageExpense from "./screens/ManageExpense";
 import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
@@ -13,7 +13,8 @@ import ExpensesContextProvider from "./store/expenses-context";
 import AuthContextProvider, { AuthContext } from "./provider/AuthProvider";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignUpScreen";
-import WelcomeScreen from "./screens/WelcomeScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AppLoading from "expo-app-loading";
 
 const Stack = createNativeStackNavigator();
 const Auth = createNativeStackNavigator();
@@ -126,13 +127,42 @@ const Navigation = () => {
     </>
   );
 };
+
+const Root = () => {
+  const authCtx = useContext(AuthContext);
+  const [isLoggingIn, setIsLoggingIn] = useState(true);
+
+  console.log("APP__LOADING ", isLoggingIn);
+
+  useEffect(() => {
+    const getToken = async () => {
+      const storeToken = await AsyncStorage.getItem("@token");
+
+      if (storeToken) {
+        authCtx.authenticated(storeToken);
+      }
+
+      setIsLoggingIn(false);
+    };
+    getToken();
+  }, []);
+
+  if (isLoggingIn) {
+    <AppLoading />;
+  }
+  return (
+    <>
+      <Navigation />
+    </>
+  );
+};
 const App = () => {
   return (
     <>
       <StatusBar style="light" />
       <AuthContextProvider>
         <ExpensesContextProvider>
-          <Navigation />
+          <Root />
         </ExpensesContextProvider>
       </AuthContextProvider>
     </>
