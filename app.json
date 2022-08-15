@@ -3,6 +3,15 @@
     "name": "ExpenseTrackerApp",
     "slug": "ExpenseTrackerApp",
     "version": "1.0.0",
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./local/assets/icon.png",
+          "color": "#ffffff"
+        }
+      ]
+    ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
