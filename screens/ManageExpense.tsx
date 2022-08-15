@@ -1,17 +1,25 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
 import { useContext, useLayoutEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 import ErrorOverlay from "../components/UI/ErrorOverlay";
 import IconButton from "../components/UI/IconButton";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
 import { GlobalStyles } from "../constants/styles";
+import { ExpenseData, RootStackParamList } from "../constants/types";
 import { AuthContext } from "../provider/AuthProvider";
-import { ExpensesContext } from "../store/expenses-context";
+import { ExpensesContext } from "../provider/ExpenseProvider";
 import { storeExpense, updateExpense, deleteExpense } from "../util/http";
 
-function ManageExpense({ route, navigation }: any) {
+type ManageExpensepageNavigationProps = NativeStackScreenProps<
+  RootStackParamList,
+  "ManageExpense"
+>;
+const ManageExpense = ({
+  route,
+  navigation,
+}: ManageExpensepageNavigationProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | undefined>();
 
@@ -21,7 +29,7 @@ function ManageExpense({ route, navigation }: any) {
   const isEditing = !!editedExpenseId;
 
   const selectedExpense = expensesCtx.expenses.find(
-    (expense) => expense.id === editedExpenseId
+    (expense: ExpenseData) => expense.id === editedExpenseId
   );
 
   useLayoutEffect(() => {
@@ -30,34 +38,30 @@ function ManageExpense({ route, navigation }: any) {
     });
   }, [navigation, isEditing]);
 
-  async function deleteExpenseHandler() {
+  const deleteExpenseHandler = async () => {
     setIsSubmitting(true);
     try {
-      await deleteExpense(editedExpenseId, authCtx.token);
-      expensesCtx.deleteExpense(editedExpenseId);
+      await deleteExpense(editedExpenseId as string, authCtx.token);
+      expensesCtx.deleteExpense(editedExpenseId as string);
       navigation.goBack();
     } catch (error) {
       setError("Could not delete expense - please try again later!");
       setIsSubmitting(false);
     }
-  }
+  };
 
-  function cancelHandler() {
+  const cancelHandler = () => {
     navigation.goBack();
-  }
+  };
 
-  async function confirmHandler(expenseData: {
-    description: string;
-    amount: any;
-    date: string;
-  }) {
+  const confirmHandler = async (expenseData: ExpenseData) => {
     setIsSubmitting(true);
     try {
       if (isEditing) {
         expensesCtx.updateExpense(editedExpenseId, expenseData, authCtx.token);
         await updateExpense(editedExpenseId, expenseData, authCtx.token);
       } else {
-        const id = await storeExpense(expenseData, authCtx.token);
+        const id: string = await storeExpense(expenseData, authCtx.token);
         expensesCtx.addExpense({ ...expenseData, id: id });
       }
       navigation.goBack();
@@ -65,7 +69,7 @@ function ManageExpense({ route, navigation }: any) {
       setError("Could not save data - please try again later!");
       setIsSubmitting(false);
     }
-  }
+  };
 
   if (error && !isSubmitting) {
     return <ErrorOverlay message={error} />;
@@ -95,7 +99,7 @@ function ManageExpense({ route, navigation }: any) {
       )}
     </View>
   );
-}
+};
 
 export default ManageExpense;
 
