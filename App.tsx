@@ -9,12 +9,13 @@ import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
 import { GlobalStyles } from "./constants/styles";
 import IconButton from "./components/UI/IconButton";
-import ExpensesContextProvider from "./store/expenses-context";
+import ExpensesContextProvider from "./provider/ExpenseProvider";
 import AuthContextProvider, { AuthContext } from "./provider/AuthProvider";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignUpScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppLoading from "expo-app-loading";
+import * as Notifications from "expo-notifications";
 
 const Stack = createNativeStackNavigator();
 const Auth = createNativeStackNavigator();
@@ -132,8 +133,6 @@ const Root = () => {
   const authCtx = useContext(AuthContext);
   const [isLoggingIn, setIsLoggingIn] = useState(true);
 
-  console.log("APP__LOADING ", isLoggingIn);
-
   useEffect(() => {
     const getToken = async () => {
       const storeToken = await AsyncStorage.getItem("@token");
@@ -156,7 +155,37 @@ const Root = () => {
     </>
   );
 };
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+      shouldShowAlert: true,
+    };
+  },
+});
+
 const App = () => {
+  useEffect(() => {
+    const triggerNotifications = () => {
+      Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Expense Logging",
+          body: "Look at you expenses and clean up your log",
+          data: {
+            userName: "Dante",
+          },
+        },
+
+        trigger: {
+          seconds: 5,
+        },
+      });
+    };
+
+    const subscription = triggerNotifications();
+  }, []);
   return (
     <>
       <StatusBar style="light" />
