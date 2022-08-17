@@ -1,6 +1,7 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
+import theme from "../../util/theme";
 
 function Button({ children, onPress, mode, style }: any) {
   return (
@@ -22,14 +23,17 @@ export default Button;
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 4,
+    borderRadius: 40,
     padding: 8,
-    backgroundColor: GlobalStyles.colors.primary500,
+    backgroundColor: theme.colors.primary,
+    height: 50,
   },
   flat: {
     backgroundColor: "transparent",
   },
   buttonText: {
+    justifyContent: "center",
+    marginTop: 8,
     color: "white",
     textAlign: "center",
   },

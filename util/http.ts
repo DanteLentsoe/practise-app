@@ -3,17 +3,19 @@ import axios from "axios";
 const BACKEND_URL =
   "https://expense-tracker-app-716f0-default-rtdb.firebaseio.com";
 
-export async function storeExpense(expenseData: any) {
+export const storeExpense = async (expenseData: any, token: string) => {
   const response = await axios.post(
-    BACKEND_URL + "/expenses.json",
+    BACKEND_URL + `/expenses.json?auth=${token}`,
     expenseData
   );
   const id = response.data.name;
   return id;
-}
+};
 
-export async function fetchExpenses() {
-  const response = await axios.get(BACKEND_URL + "/expenses.json");
+export const fetchExpenses = async (token: string) => {
+  const response = await axios.get(
+    BACKEND_URL + `/expenses.json?auth=${token}`
+  );
 
   const expenses = [];
 
@@ -28,12 +30,15 @@ export async function fetchExpenses() {
   }
 
   return expenses;
-}
+};
 
-export function updateExpense(id: string, expenseData: any) {
-  return axios.put(BACKEND_URL + `/expenses/${id}.json`, expenseData);
-}
+export const updateExpense = (id: string, expenseData: any, token: string) => {
+  return axios.put(
+    BACKEND_URL + `/expenses/${id}.json?auth=${token}`,
+    expenseData
+  );
+};
 
-export function deleteExpense(id: string) {
-  return axios.delete(BACKEND_URL + `/expenses/${id}.json`);
-}
+export const deleteExpense = (id: string, token: string) => {
+  return axios.delete(BACKEND_URL + `/expenses/${id}.json?auth=${token}`);
+};
