@@ -1,4 +1,4 @@
-# ExpenseTrackerApp
+# FinDome
 
 This is an Expense tracker application, with mordern UI and UX considerations, fuzzy search etc.
 
@@ -203,10 +203,8 @@ Failed to push to Github due to out of date snapshots:
 
 | Version | Author                              | Date       |
 | ------- | ----------------------------------- | ---------- |
-| 0.4.1   | Dante Lentsoe <dllentsoe@gmail.com> | 13/06/2022 |
+| 0.6<img width="537" alt="Screenshot 2022-08-17 at 22 16 27" src="https://user-images.githubusercontent.com/65385487/185234991-bcd1eb23-1962-4020-84c6-b72994caf1ad.png">
+<img width="530" alt="Screenshot 2022-08-17 at 22 16 34" src="https://user-images.githubusercontent.com/65385487/185235015-1b2cc269-942b-4b7a-ab65-a48839cf35fa.png">
+.1   | Dante Lentsoe <dllentsoe@gmail.com> | 17/08/2022 |
 
-<img width="366" alt="Screenshot 2022-05-31 at 11 50 00" src="https://user-images.githubusercontent.com/65385487/173329967-f9206c9f-ae86-4085-bbe7-1d2ed6e64828.png">
-![Simulator Screen Shot - iPhone 12 - 2022-06-08 at 21 43 30](https://user-images.githubusercontent.com/65385487/173329989-2dd05fef-499b-482e-ae08-eaddd211faee.png)
-![Simulator Screen Shot - iPhone 12 - 2022-06-08 at 21 43 38](https://user-images.githubusercontent.com/65385487/173329994-fa069cf3-748f-413d-8f1a-41f7ae9ff3d4.png)
-![Simulator Screen Shot - iPhone 12 - 2022-06-08 at 21 44 31](https://user-images.githubusercontent.com/65385487/173329998-1d3d294f-8c82-47cf-b297-237605852742.png)
-![Simulator Screen Shot - iPhone 12 - 2022-06-08 at 21 44 37](https://user-images.githubusercontent.com/65385487/173330002-8acd4d3c-fe20-4599-983f-48bf91bf4e2e.png)
+
