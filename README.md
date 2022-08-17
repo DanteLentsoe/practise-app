@@ -203,8 +203,9 @@ Failed to push to Github due to out of date snapshots:
 
 | Version | Author                              | Date       |
 | ------- | ----------------------------------- | ---------- |
-| 0.6<img width="537" alt="Screenshot 2022-08-17 at 22 16 27" src="https://user-images.githubusercontent.com/65385487/185234991-bcd1eb23-1962-4020-84c6-b72994caf1ad.png">
+| 0.6.1   | Dante Lentsoe <dllentsoe@gmail.com> | 17/08/2022 |
+
+<img width="537" alt="Screenshot 2022-08-17 at 22 16 27" src="https://user-images.githubusercontent.com/65385487/185234991-bcd1eb23-1962-4020-84c6-b72994caf1ad.png">
 <img width="530" alt="Screenshot 2022-08-17 at 22 16 34" src="https://user-images.githubusercontent.com/65385487/185235015-1b2cc269-942b-4b7a-ab65-a48839cf35fa.png">
-.1   | Dante Lentsoe <dllentsoe@gmail.com> | 17/08/2022 |
 
 
