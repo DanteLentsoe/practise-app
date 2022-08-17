@@ -29,8 +29,20 @@ const AuthStack = () => {
         headerTintColor: "white",
       }}
       initialRouteName="login">
-      <Auth.Screen name="Login" component={LoginScreen} />
-      <Auth.Screen name="Signup" component={SignupScreen} />
+      <Auth.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Auth.Screen
+        name="Signup"
+        component={SignupScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Auth.Navigator>
   );
 };
