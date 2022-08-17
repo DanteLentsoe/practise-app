@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import React, { createContext, useReducer } from "react";
 import { ExpenseData } from "../../constants/types";
 type Actions = {
   payload: ExpenseData[];
@@ -6,7 +6,7 @@ type Actions = {
 };
 
 export const ExpensesContext = createContext({
-  expenses: [],
+  expenses: [] as ExpenseData[],
   addExpense: ({ description, amount, date }: ExpenseData) => {},
   setExpenses: (expenses: ExpenseData[]) => {},
   deleteExpense: (id: string) => {},
@@ -17,7 +17,10 @@ export const ExpensesContext = createContext({
   ) => {},
 });
 
-const expensesReducer = (state: any, action: any) => {
+const expensesReducer = (
+  state: ExpenseData[],
+  action: { type: string; payload: string | any }
+) => {
   switch (action.type) {
     case "ADD":
       return [action.payload, ...state];

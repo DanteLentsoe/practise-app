@@ -4,6 +4,7 @@ export type UserAuthInfo = {
 };
 
 export type ExpenseData = {
+  data: any;
   id: string;
   description: string;
   amount: number;
@@ -18,4 +19,11 @@ export type RootStackParamList = {
   Signup: undefined;
   RecentExpenses: undefined;
   AllExpenses: undefined;
+};
+
+export type Credentials = {
+  email: string | boolean;
+  confirmEmail: string | boolean;
+  password: string | boolean;
+  confirmPassword: string | boolean;
 };

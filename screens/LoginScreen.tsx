@@ -6,7 +6,7 @@ import { loginUser } from "../util/auth";
 import { Alert } from "react-native";
 import { AuthContext } from "../provider/AuthProvider";
 
-function LoginScreen() {
+const LoginScreen = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const AuthCtx = useContext(AuthContext);
 
@@ -26,6 +26,6 @@ function LoginScreen() {
     return <LoadingOverlay message="Logging in" />;
   }
   return <AuthContent isLogin onAuthenticate={loginUserHandler} />;
-}
+};
 
 export default LoginScreen;
