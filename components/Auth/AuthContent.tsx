@@ -1,13 +1,16 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import theme from "../../util/theme";
 import React from "react";
 import { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, Image, StyleSheet, View } from "react-native";
+import { Credentials } from "../../constants/types";
+import { deviceHeight, deviceWeight } from "../../util/DeviceAPI";
 
 import FlatButton from "../UI/FlatButton";
 import AuthForm from "./AuthForm";
 
-function AuthContent({
+const AuthContent = ({
   isLogin,
   onAuthenticate,
 }: {
@@ -19,7 +22,7 @@ function AuthContent({
     email: string;
     password: string;
   }) => void;
-}) {
+}) => {
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     email: false,
     password: false,
@@ -29,19 +32,19 @@ function AuthContent({
 
   const navigation = useNavigation();
 
-  function switchAuthModeHandler() {
+  const switchAuthModeHandler = () => {
     if (isLogin) {
       navigation.navigate("Signup");
     } else {
       navigation.navigate("Login");
     }
-  }
+  };
 
-  function submitHandler(credentials: any) {
+  const submitHandler = (credentials: Credentials) => {
     let { email, confirmEmail, password, confirmPassword } = credentials;
 
-    email = email.trim();
-    password = password.trim();
+    email = email.trim() as string;
+    password = password.trim() as string;
 
     const emailIsValid = email.includes("@");
     const passwordIsValid = password.length > 6;
@@ -63,12 +66,19 @@ function AuthContent({
       return;
     }
     onAuthenticate({ email, password });
-  }
+  };
 
   return (
-    <View style={styles.authContent}>
+    <View style={styles.container}>
+      <View
+        style={{ alignItems: "center", marginTop: (deviceHeight * 12) / 100 }}>
+        <Image
+          source={require("../../assets/FinDome_Logo.jpg")}
+          style={{ height: 120, width: 120, borderRadius: 100 }}
+        />
+      </View>
       <AuthForm
-        isLogin={isLogin}
+        isLogin={isLogin as boolean}
         onSubmit={submitHandler}
         credentialsInvalid={credentialsInvalid}
       />
@@ -79,25 +89,22 @@ function AuthContent({
       </View>
     </View>
   );
-}
+};
 
 export default AuthContent;
 
 const styles = StyleSheet.create({
-  authContent: {
-    marginTop: 64,
-    marginHorizontal: 32,
-    height: 400,
-    padding: 16,
-    borderRadius: 8,
-    backgroundColor: "#b69595",
+  container: {
+    flex: 1,
+    height: deviceHeight,
+    width: deviceWeight,
+    backgroundColor: theme.colors.secondary,
+  },
+  buttons: {
     elevation: 2,
     shadowColor: "black",
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.35,
     shadowRadius: 4,
-  },
-  buttons: {
-    marginTop: 8,
   },
 });
