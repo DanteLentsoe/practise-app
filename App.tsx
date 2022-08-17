@@ -3,17 +3,19 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ManageExpense from "./screens/ManageExpense";
 import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
 import { GlobalStyles } from "./constants/styles";
 import IconButton from "./components/UI/IconButton";
-import ExpensesContextProvider from "./store/expenses-context";
+import ExpensesContextProvider from "./provider/ExpenseProvider";
 import AuthContextProvider, { AuthContext } from "./provider/AuthProvider";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignUpScreen";
-import WelcomeScreen from "./screens/WelcomeScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AppLoading from "expo-app-loading";
+import * as Notifications from "expo-notifications";
 
 const Stack = createNativeStackNavigator();
 const Auth = createNativeStackNavigator();
@@ -27,8 +29,20 @@ const AuthStack = () => {
         headerTintColor: "white",
       }}
       initialRouteName="login">
-      <Auth.Screen name="Login" component={LoginScreen} />
-      <Auth.Screen name="Signup" component={SignupScreen} />
+      <Auth.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Auth.Screen
+        name="Signup"
+        component={SignupScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Auth.Navigator>
   );
 };
@@ -126,13 +140,70 @@ const Navigation = () => {
     </>
   );
 };
+
+const Root = () => {
+  const authCtx = useContext(AuthContext);
+  const [isLoggingIn, setIsLoggingIn] = useState(true);
+
+  useEffect(() => {
+    const getToken = async () => {
+      const storeToken = await AsyncStorage.getItem("@token");
+
+      if (storeToken) {
+        authCtx.authenticated(storeToken);
+      }
+
+      setIsLoggingIn(false);
+    };
+    getToken();
+  }, []);
+
+  if (isLoggingIn) {
+    <AppLoading />;
+  }
+  return (
+    <>
+      <Navigation />
+    </>
+  );
+};
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+      shouldShowAlert: true,
+    };
+  },
+});
+
 const App = () => {
+  useEffect(() => {
+    const triggerNotifications = () => {
+      Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Expense Logging",
+          body: "Look at you expenses and clean up your log",
+          data: {
+            userName: "Dante",
+          },
+        },
+
+        trigger: {
+          seconds: 5,
+        },
+      });
+    };
+
+    const subscription = triggerNotifications();
+  }, []);
   return (
     <>
       <StatusBar style="light" />
       <AuthContextProvider>
         <ExpensesContextProvider>
-          <Navigation />
+          <Root />
         </ExpensesContextProvider>
       </AuthContextProvider>
     </>
