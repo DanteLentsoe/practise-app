@@ -1,11 +1,25 @@
 import React from "react";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { Credentials } from "../../constants/types";
 
 import Button from "../UI/Button";
 import Input from "./Input";
 
-function AuthForm(this: any, { isLogin, onSubmit, credentialsInvalid }: any) {
+type AuthFormTypes = {
+  isLogin: boolean;
+  onSubmit: ({
+    email,
+    confirmEmail,
+    password,
+    confirmPassword,
+  }: Credentials) => void;
+  credentialsInvalid: Credentials;
+};
+function AuthForm(
+  this: undefined,
+  { isLogin, onSubmit, credentialsInvalid }: AuthFormTypes
+) {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredConfirmEmail, setEnteredConfirmEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
@@ -18,7 +32,7 @@ function AuthForm(this: any, { isLogin, onSubmit, credentialsInvalid }: any) {
     confirmPassword: passwordsDontMatch,
   } = credentialsInvalid;
 
-  function updateInputValueHandler(inputType: any, enteredValue: any) {
+  const updateInputValueHandler = (inputType: string, enteredValue: string) => {
     switch (inputType) {
       case "email":
         setEnteredEmail(enteredValue);
@@ -33,27 +47,27 @@ function AuthForm(this: any, { isLogin, onSubmit, credentialsInvalid }: any) {
         setEnteredConfirmPassword(enteredValue);
         break;
     }
-  }
+  };
 
-  function submitHandler() {
+  const submitHandler = () => {
     onSubmit({
       email: enteredEmail,
       confirmEmail: enteredConfirmEmail,
       password: enteredPassword,
       confirmPassword: enteredConfirmPassword,
     });
-  }
+  };
 
   return (
     <View style={styles.form}>
-      <View>
+      <View style={{ marginTop: 20 }}>
         <Input
           label="Email Address"
           onUpdateValue={updateInputValueHandler.bind(this, "email")}
           value={enteredEmail}
           keyboardType="email-address"
-          isInvalid={emailIsInvalid}
-          secure={undefined}
+          isInvalid={emailIsInvalid as boolean}
+          secure={false}
         />
         {!isLogin && (
           <Input
@@ -61,8 +75,8 @@ function AuthForm(this: any, { isLogin, onSubmit, credentialsInvalid }: any) {
             onUpdateValue={updateInputValueHandler.bind(this, "confirmEmail")}
             value={enteredConfirmEmail}
             keyboardType="email-address"
-            isInvalid={emailsDontMatch}
-            secure={undefined}
+            isInvalid={emailsDontMatch as boolean}
+            secure={false}
           />
         )}
         <Input
@@ -70,8 +84,8 @@ function AuthForm(this: any, { isLogin, onSubmit, credentialsInvalid }: any) {
           onUpdateValue={updateInputValueHandler.bind(this, "password")}
           secure
           value={enteredPassword}
-          isInvalid={passwordIsInvalid}
-          keyboardType={undefined}
+          isInvalid={passwordIsInvalid as boolean}
+          keyboardType={"ascii-capable"}
         />
         {!isLogin && (
           <Input
@@ -82,7 +96,7 @@ function AuthForm(this: any, { isLogin, onSubmit, credentialsInvalid }: any) {
             )}
             secure
             value={enteredConfirmPassword}
-            isInvalid={passwordsDontMatch}
+            isInvalid={passwordsDontMatch as boolean}
             keyboardType={undefined}
           />
         )}
