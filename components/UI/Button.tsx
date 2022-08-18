@@ -1,9 +1,19 @@
-import React from "react";
+import React, { CSSProperties, ReactNode } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
+import { ReactChildrenType } from "../../constants/types";
 import theme from "../../util/theme";
 
-function Button({ children, onPress, mode, style }: any) {
+type GenericButtonTypes = {
+  children: ReactChildrenType;
+  onPress?: () => void;
+  mode?: string | undefined;
+  style?: {
+    marginHorizontal?: number | string;
+    minWidth?: number | string;
+  };
+};
+const Button = ({ children, onPress, mode, style }: GenericButtonTypes) => {
   return (
     <View style={style}>
       <Pressable
@@ -17,7 +27,7 @@ function Button({ children, onPress, mode, style }: any) {
       </Pressable>
     </View>
   );
-}
+};
 
 export default Button;
 

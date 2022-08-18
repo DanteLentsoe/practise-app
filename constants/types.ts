@@ -27,3 +27,7 @@ export type Credentials = {
   password: string | boolean;
   confirmPassword: string | boolean;
 };
+
+export type ReactChildrenType = {
+  children: JSX.Element;
+};
