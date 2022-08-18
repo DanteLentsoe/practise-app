@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import React from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ReactChildrenType } from "../../constants/types";
 export const AuthContext = createContext({
   token: "",
   isAuthtenticated: false,
@@ -8,7 +9,7 @@ export const AuthContext = createContext({
   logout: () => {},
 });
 
-const AuthContextProvider = ({ children }: any) => {
+const AuthContextProvider = ({ children }: ReactChildrenType) => {
   const [authToken, setAuthToken] = useState<
     string | undefined | null | boolean
   >(undefined);

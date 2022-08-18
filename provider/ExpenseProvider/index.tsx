@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from "react";
-import { ExpenseData } from "../../constants/types";
+import { ExpenseData, ReactChildrenType } from "../../constants/types";
 type Actions = {
   payload: ExpenseData[];
   type: string;
@@ -45,7 +45,7 @@ const expensesReducer = (
   }
 };
 
-const ExpensesContextProvider = ({ children }: any) => {
+const ExpensesContextProvider = ({ children }: ReactChildrenType) => {
   const [expensesState, dispatch] = useReducer(expensesReducer, []);
 
   const addExpense = (expenseData: ExpenseData) => {
