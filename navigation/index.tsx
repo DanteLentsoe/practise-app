@@ -13,6 +13,7 @@ import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignUpScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppLoading from "expo-app-loading";
+import theme from "../util/theme";
 
 const Stack = createNativeStackNavigator();
 const Auth = createNativeStackNavigator();
@@ -22,7 +23,6 @@ const AuthStack = () => {
   return (
     <Auth.Navigator
       screenOptions={{
-        // headerStyle: { backgroundColor: "green" },
         headerTintColor: "white",
       }}
       initialRouteName="login">
@@ -62,7 +62,9 @@ const AuthenticatedRoutes = () => {
           name="ManageExpense"
           component={ManageExpense}
           options={{
-            presentation: "modal",
+            headerStyle: { backgroundColor: theme.colors.primary },
+            headerTintColor: "white",
+            headerBackTitle: "",
           }}
         />
       </Stack.Navigator>
@@ -75,10 +77,11 @@ const ExpensesOverview = () => {
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
-        headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        headerStyle: { backgroundColor: theme.colors.primary },
         headerTintColor: "white",
-        tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-        tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        tabBarStyle: { bottom: 20 },
+        tabBarActiveBackgroundColor: theme.colors.primary,
+        tabBarActiveTintColor: "#ffffff",
         headerRight: ({ tintColor }) => (
           <IconButton
             icon="add"

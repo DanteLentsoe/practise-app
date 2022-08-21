@@ -1,16 +1,15 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
-import { useContext, useLayoutEffect, useState } from "react";
+import React, { useContext, useLayoutEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 import ErrorOverlay from "../components/UI/ErrorOverlay";
 import IconButton from "../components/UI/IconButton";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
-import { GlobalStyles } from "../constants/styles";
 import { ExpenseData, RootStackParamList } from "../constants/types";
 import { AuthContext } from "../provider/AuthProvider";
 import { ExpensesContext } from "../provider/ExpenseProvider";
 import { storeExpense, updateExpense, deleteExpense } from "../util/http";
+import theme from "../util/theme";
 
 type ManageExpensepageNavigationProps = NativeStackScreenProps<
   RootStackParamList,
@@ -91,7 +90,7 @@ const ManageExpense = ({
         <View style={styles.deleteContainer}>
           <IconButton
             icon="trash"
-            color={GlobalStyles.colors.error500}
+            color={theme.colors.primary}
             size={36}
             onPress={deleteExpenseHandler}
           />
@@ -100,20 +99,19 @@ const ManageExpense = ({
     </View>
   );
 };
-
 export default ManageExpense;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: GlobalStyles.colors.primary800,
+    backgroundColor: theme.colors.secondary,
   },
   deleteContainer: {
     marginTop: 16,
     paddingTop: 8,
     borderTopWidth: 2,
-    borderTopColor: GlobalStyles.colors.primary200,
+    borderTopColor: theme.colors.primary,
     alignItems: "center",
   },
 });
