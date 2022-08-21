@@ -1,14 +1,17 @@
 import React from "react";
 import { FlatList } from "react-native";
 import { ExpenseData } from "../../constants/types";
-
 import ExpenseItem from "./ExpenseItem";
 
-const renderExpenseItem = (itemData: { item: any }) => {
+type ExpenseDataType = {
+  expenses: ExpenseData[];
+};
+
+const renderExpenseItem = (itemData: { item: ExpenseData }) => {
   return <ExpenseItem {...itemData.item} />;
 };
 
-const ExpensesList = ({ expenses }) => {
+const ExpensesList = ({ expenses }: ExpenseDataType) => {
   return (
     <FlatList
       data={expenses}

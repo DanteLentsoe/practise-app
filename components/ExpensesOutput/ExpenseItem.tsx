@@ -1,9 +1,9 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { GlobalStyles } from "../../constants/styles";
 import { getFormattedDate } from "../../util/date";
 import React from "react";
 import { ExpenseData } from "../../constants/types";
+import theme from "../../util/theme";
 
 const ExpenseItem = ({ id, description, amount, date }: ExpenseData) => {
   const navigation = useNavigation();
@@ -19,14 +19,12 @@ const ExpenseItem = ({ id, description, amount, date }: ExpenseData) => {
       onPress={expensePressHandler}
       style={({ pressed }) => pressed && styles.pressed}>
       <View style={styles.expenseItem}>
-        <View>
-          <Text style={[styles.textBase, styles.description]}>
-            {description}
-          </Text>
+        <View style={styles.infoContainer}>
+          <Text style={[styles.description]}>{description}</Text>
           <Text style={styles.textBase}>{getFormattedDate(date as Date)}</Text>
         </View>
         <View style={styles.amountContainer}>
-          <Text style={styles.amount}>{amount.toFixed(2)}</Text>
+          <Text style={styles.amount}>${amount.toFixed(2)}</Text>
         </View>
       </View>
     </Pressable>
@@ -42,23 +40,33 @@ const styles = StyleSheet.create({
   expenseItem: {
     padding: 12,
     marginVertical: 8,
-    backgroundColor: GlobalStyles.colors.primary500,
     flexDirection: "row",
     justifyContent: "space-between",
-    borderRadius: 6,
-    elevation: 3,
-    shadowColor: GlobalStyles.colors.gray500,
     shadowRadius: 4,
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.4,
+
+    paddingTop: 40,
+    textAlign: "center",
+    paddingHorizontal: 6,
+    backgroundColor: "#ffffff",
+    elevation: 4,
+    shadowColor: "#E6EAF8",
+    shadowOpacity: 1,
+    shadowOffset: {
+      width: 3,
+      height: 10,
+    },
+    borderRadius: 25,
+    fontSize: 16,
+    height: 75,
   },
   textBase: {
-    color: GlobalStyles.colors.primary50,
+    color: "#777474",
   },
   description: {
     fontSize: 16,
     marginBottom: 4,
     fontWeight: "bold",
+    color: theme.colors.primary,
   },
   amountContainer: {
     paddingHorizontal: 12,
@@ -70,7 +78,13 @@ const styles = StyleSheet.create({
     minWidth: 80,
   },
   amount: {
-    color: GlobalStyles.colors.primary500,
+    color: theme.colors.primary,
     fontWeight: "bold",
+    paddingBottom: Platform.OS === "ios" ? 35 : 0,
+    bottom: Platform.OS === "android" ? 14 : 0,
+  },
+  infoContainer: {
+    top: -22,
+    left: 12,
   },
 });

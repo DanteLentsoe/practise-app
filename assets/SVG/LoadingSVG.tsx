@@ -4,9 +4,9 @@ import Svg, { Path, Circle } from "react-native-svg";
 const LoadingSVG = (props: any) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width={692.68}
-    height={503.587}
-    viewBox={"0 0 600 700"}
+    width={"100%"}
+    height={"100%"}
+    viewBox="0 0 941.9 695.3"
     {...props}>
     <Path
       d="M0 497.672c0 .872.7 1.572 1.571 1.572H691.11c.872 0 1.571-.7 1.571-1.572 0-.87-.7-1.57-1.57-1.57H1.57c-.871 0-1.571.7-1.571 1.57Z"
