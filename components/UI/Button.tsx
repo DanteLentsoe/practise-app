@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactNode } from "react";
+import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import { ReactChildrenType } from "../../constants/types";
@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
     height: 50,
   },
   flat: {
-    backgroundColor: "transparent",
+    backgroundColor: "#ebe6e6",
+    color: "white",
   },
   buttonText: {
     justifyContent: "center",
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   flatText: {
-    color: GlobalStyles.colors.primary200,
+    color: theme.colors.primary,
   },
   pressed: {
     opacity: 0.75,
