@@ -6,9 +6,9 @@ import theme from "../../util/theme";
 const LoadingOverlay = ({ message }: { message?: string }) => {
   return (
     <View style={styles.container}>
-      {/* <View style={{ height: 100, width: 200 }}>
+      <View style={{ height: 300, width: 350, alignItems: "center", left: 50 }}>
         <LoadingSVG />
-      </View> */}
+      </View>
 
       <ActivityIndicator size="large" color={theme.colors.secondary} />
       <Text style={styles.loadingText}>{message}</Text>

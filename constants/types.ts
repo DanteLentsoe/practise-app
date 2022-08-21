@@ -4,7 +4,7 @@ export type UserAuthInfo = {
 };
 
 export type ExpenseData = {
-  data: any;
+  data?: any;
   id: string;
   description: string;
   amount: number;
