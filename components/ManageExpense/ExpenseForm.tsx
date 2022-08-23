@@ -7,6 +7,7 @@ import { GlobalStyles } from "../../constants/styles";
 import theme from "../../util/theme";
 import Toast from "react-native-root-toast";
 import DatePicker from "react-native-datepicker";
+import { deviceWeight } from "../../util/DeviceAPI";
 
 const ExpenseForm = ({
   submitButtonLabel,
@@ -30,7 +31,7 @@ const ExpenseForm = ({
     },
   });
 
-  const inputChangedHandler = (inputIdentifier, enteredValue) => {
+  const inputChangedHandler = (inputIdentifier: any, enteredValue: any) => {
     setInputs((curInputs) => {
       return {
         ...curInputs,
@@ -87,43 +88,61 @@ const ExpenseForm = ({
             value: inputs.amount.value,
           }}
         />
-        <DatePicker
+
+        <Text
           style={{
-            ...styles.input,
-          }}
-          date={new Date()} //initial date from state
+            marginTop: 10,
+            fontSize: 12,
+            right: 135,
+            color: "#817e7e",
+            marginBottom: 4,
+          }}>
+          {" "}
+          Date
+        </Text>
+        <DatePicker
+          date={inputs.date.value} //initial date from state
           mode="date" //The enum of date, datetime and time
           placeholder="select date"
           format="YYYY-MM-DD"
           maxDate={new Date()}
           confirmBtnText="Confirm"
           cancelBtnText="Cancel"
-          // onBlur={handleBlur("date")}
-          // value={"values"}
+          style={{
+            color: GlobalStyles.colors.primary700,
+            padding: 6,
+            paddingTop: 40,
+            textAlign: "center",
+            paddingHorizontal: 6,
+            backgroundColor: "#ffffff",
+            elevation: 4,
+            shadowColor: "#E6EAF8",
+            shadowOpacity: 1,
+            shadowOffset: {
+              width: 3,
+              height: 10,
+            },
+            borderRadius: 25,
+            fontSize: 16,
+            height: 75,
+            width: (deviceWeight * 80) / 100,
+          }}
           customStyles={{
+            dateText: {
+              color: theme.colors.primary,
+              fontSize: 16,
+            },
             dateIcon: {
-              position: "absolute",
               right: 0,
-              top: 4,
-              marginRight: 0,
+              top: -22,
             },
             dateInput: {
-              marginLeft: -220,
+              alignItems: "center",
+              marginLeft: 40,
               borderWidth: 0,
             },
           }}
           onDateChange={inputChangedHandler.bind(this, "date")}
-        />
-        <Input
-          style={styles.rowInput}
-          label="Date"
-          invalid={!inputs.date.isValid}
-          textInputConfig={{
-            placeholder: "YYYY-MM-DD",
-            maxLength: 10,
-            onChangeText: inputChangedHandler.bind(this, "date"),
-            value: inputs.date.value,
-          }}
         />
 
         <Input

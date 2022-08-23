@@ -8,40 +8,40 @@ type InputTypes = {
   invalid?: boolean;
   style?: {
     flex: number;
-    inputContainer: {
+    inputContainer?: {
       marginHorizontal: number;
       marginVertical: number;
     };
-    label: {
+    label?: {
       fontSize: number;
       color: string;
       marginBottom: number;
     };
-    input: {
+    input?: {
       backgroundColor: string;
       color: string;
       padding: number;
       borderRadius: number;
       fontSize: number;
     };
-    inputMultiline: {
+    inputMultiline?: {
       minHeight: number;
       textAlignVertical: "top";
     };
-    invalidLabel: {
+    invalidLabel?: {
       color: string;
     };
-    invalidInput: {
+    invalidInput?: {
       backgroundColor: string;
     };
   };
-  textInputConfig: {
+  textInputConfig?: {
     keyboardType?: string;
     onChangeText?: (inputIdentifier: any, enteredValue: any) => void;
     value?: string;
     maxLength?: number;
-    placeholder: string | Date;
-    multiline: true;
+    placeholder?: string | Date;
+    multiline?: true;
   };
 };
 
