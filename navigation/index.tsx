@@ -14,6 +14,7 @@ import SignupScreen from "../screens/SignUpScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppLoading from "expo-app-loading";
 import theme from "../util/theme";
+import { StyleSheet, View } from "react-native";
 
 const Stack = createNativeStackNavigator();
 const Auth = createNativeStackNavigator();
@@ -80,7 +81,7 @@ const ExpensesOverview = () => {
         headerStyle: { backgroundColor: theme.colors.primary },
         headerTintColor: "white",
         tabBarStyle: { bottom: 20 },
-        tabBarActiveBackgroundColor: theme.colors.primary,
+
         tabBarActiveTintColor: "#ffffff",
         headerRight: ({ tintColor }) => (
           <IconButton
@@ -109,8 +110,17 @@ const ExpensesOverview = () => {
         options={{
           title: "Recent Expenses",
           tabBarLabel: "Recent",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="hourglass" size={size} color={color} />
+          tabBarLabelStyle: { color: "gray" },
+          tabBarInactiveBackgroundColor: theme.colors.secondary,
+          tabBarActiveBackgroundColor: theme.colors.secondary,
+          tabBarIcon: ({ color, size, focused }) => (
+            <View
+              style={{
+                ...styles.buttonContainer,
+                backgroundColor: focused ? theme.colors.primary : "transparent",
+              }}>
+              <Ionicons name="hourglass" size={size} color={color} />
+            </View>
           ),
         }}
       />
@@ -120,8 +130,17 @@ const ExpensesOverview = () => {
         options={{
           title: "All Expenses",
           tabBarLabel: "All Expenses",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="calendar" size={size} color={color} />
+          tabBarLabelStyle: { color: "gray" },
+          tabBarInactiveBackgroundColor: theme.colors.secondary,
+          tabBarActiveBackgroundColor: theme.colors.secondary,
+          tabBarIcon: ({ color, size, focused }) => (
+            <View
+              style={{
+                ...styles.buttonContainer,
+                backgroundColor: focused ? theme.colors.primary : "transparent",
+              }}>
+              <Ionicons name="calendar" size={size} color={color} />
+            </View>
           ),
         }}
       />
@@ -169,3 +188,13 @@ const Root = () => {
 };
 
 export default Root;
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    height: 40,
+    width: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 8,
+  },
+});
