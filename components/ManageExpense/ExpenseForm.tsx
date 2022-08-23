@@ -5,6 +5,8 @@ import Button from "../UI/Button";
 import { getFormattedDate } from "../../util/date";
 import { GlobalStyles } from "../../constants/styles";
 import theme from "../../util/theme";
+import Toast from "react-native-root-toast";
+import DatePicker from "react-native-datepicker";
 
 const ExpenseForm = ({
   submitButtonLabel,
@@ -85,6 +87,33 @@ const ExpenseForm = ({
             value: inputs.amount.value,
           }}
         />
+        <DatePicker
+          style={{
+            ...styles.input,
+          }}
+          date={new Date()} //initial date from state
+          mode="date" //The enum of date, datetime and time
+          placeholder="select date"
+          format="YYYY-MM-DD"
+          maxDate={new Date()}
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          // onBlur={handleBlur("date")}
+          // value={"values"}
+          customStyles={{
+            dateIcon: {
+              position: "absolute",
+              right: 0,
+              top: 4,
+              marginRight: 0,
+            },
+            dateInput: {
+              marginLeft: -220,
+              borderWidth: 0,
+            },
+          }}
+          onDateChange={inputChangedHandler.bind(this, "date")}
+        />
         <Input
           style={styles.rowInput}
           label="Date"
@@ -96,18 +125,18 @@ const ExpenseForm = ({
             value: inputs.date.value,
           }}
         />
+
+        <Input
+          label="Description"
+          invalid={!inputs.description.isValid}
+          textInputConfig={{
+            multiline: true,
+            onChangeText: inputChangedHandler.bind(this, "description"),
+            value: inputs.description.value,
+          }}
+        />
       </View>
-      <Input
-        label="Description"
-        invalid={!inputs.description.isValid}
-        textInputConfig={{
-          multiline: true,
-          // autoCapitalize: 'none'
-          // autoCorrect: false // default is true
-          onChangeText: inputChangedHandler.bind(this, "description"),
-          value: inputs.description.value,
-        }}
-      />
+
       {formIsInvalid && (
         <Text style={styles.errorText}>
           Invalid input values - please check your entered data!
@@ -115,7 +144,7 @@ const ExpenseForm = ({
       )}
       <View style={styles.buttons}>
         <Button style={{ ...styles.button }} mode="flat" onPress={onCancel}>
-          Cancel
+          {"Cancel"}
         </Button>
         <Button style={styles.button} onPress={submitHandler}>
           {submitButtonLabel}

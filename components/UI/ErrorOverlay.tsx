@@ -6,7 +6,7 @@ import theme from "../../util/theme";
 const ErrorOverlay = ({ message }: { message: string }) => {
   return (
     <View style={styles.container}>
-      <View style={{ height: 450, width: 750 }}>
+      <View style={{ height: 350, width: 400 }}>
         <ErrorSVG />
       </View>
       <Text style={[styles.text, styles.title]}>An error occurred!</Text>
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 24,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.secondary,
   },
   text: {
     color: "white",
@@ -33,5 +33,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    color: theme.colors.primary,
   },
 });

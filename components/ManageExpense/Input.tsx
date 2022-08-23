@@ -74,8 +74,10 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   label: {
+    marginTop: 10,
     fontSize: 12,
-    color: GlobalStyles.colors.primary100,
+    left: 10,
+    color: "#817e7e",
     marginBottom: 4,
   },
   input: {

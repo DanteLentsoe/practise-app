@@ -4,7 +4,6 @@ import ExpensesContextProvider from "./provider/ExpenseProvider";
 import AuthContextProvider from "./provider/AuthProvider";
 import * as Notifications from "expo-notifications";
 import Root from "./navigation";
-
 Notifications.setNotificationHandler({
   handleNotification: async () => {
     return {
