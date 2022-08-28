@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     width: (deviceWeight * 80) / 100,
   },
   inputMultiline: {
-    minHeight: 100,
+    minHeight: 35,
     textAlignVertical: "top",
   },
   invalidLabel: {
