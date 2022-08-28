@@ -8,6 +8,7 @@ export type ExpenseData = {
   id: string;
   description: string;
   amount: number;
+  expenseCategory?: string;
   date: string | Date;
   token?: string;
 };
